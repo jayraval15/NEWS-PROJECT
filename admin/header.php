@@ -59,6 +59,9 @@ if(!isset($_SESSION["username"])){
                             <li>
                                 <a href="users.php">Users</a>
                             </li>
+                            <li>
+                                <a href="settings.php">setting</a>
+                            </li>
                             <?php
 }
                             ?>
