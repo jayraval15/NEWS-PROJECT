@@ -15,6 +15,7 @@
                     }
 
  $sqli = "SELECT * FROM post join paper on post.post_author = paper.id where post.post_author = {$auth_id}";
+ 
  $result1 = mysqli_query($conn,$sqli) or die("jdhsijdhi"); 
 
  $row12 = mysqli_fetch_assoc($result1);

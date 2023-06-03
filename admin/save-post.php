@@ -18,8 +18,10 @@ if(isset($_FILES['fileToUpload'])){
     if($file_size > 2097152){
         $error[] = "PLESS CHOSE THE 2MB SIZE"; 
     }
+    $new_name = time()."-".basename($file_name);
+    $target  = "upload/".$new_name;
     if(empty($error) == true){
-        move_uploaded_file($file_tmp,"upload/".$file_name);
+        move_uploaded_file($file_tmp,$target);
     }else{
         print_r($error);
         die();
@@ -34,7 +36,7 @@ $category = mysqli_real_escape_string($conn,$_POST['category']);
 $date = date("d M,Y");
 $author = $_SESSION['id'];
 
-$query = "INSERT INTO post(`title`,`description`,`category`,`post_date`,`post_author`,`post_img`) value ('{$title}','{$postdesc}','{$category}','{$date}','{$author}','{$file_name}');";
+$query = "INSERT INTO post(`title`,`description`,`category`,`post_date`,`post_author`,`post_img`) value ('{$title}','{$postdesc}','{$category}','{$date}','{$author}','{$new_name}');";
 
 $query .= "UPDATE category set category_post = category_post + 1   where category_id = '{$category}' ";
 
