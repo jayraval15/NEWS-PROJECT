@@ -9,8 +9,6 @@
             <?php  
                 require_once("config.php");
                 $limit = 3;
-           
-
             if(isset($_GET['page'])){
                 $page = $_GET['page'];
             }else{
