@@ -5,48 +5,48 @@
                 <div class="col-md-8">
                   <!-- post-container -->
                     <div class="post-container">
-                    <?php
-                            include "config.php";
+                      <?php
+                        include "config.php";
 
-                                $post_id = $_GET['id'];
+                        $post_id = $_GET['id'];
 
-                            $query = "SELECT * FROM  post
-                            LEFT JOIN category on post.category = category.category_id
-                            LEFT JOIN paper on post.post_author = paper.id 
-                            where post.post_id = {$post_id}";
+                        $sql = "SELECT post.post_id, post.title, post.description,post.post_date,post.author,
+                        category.category_name,user.username,post.category,post.post_img FROM post
+                        LEFT JOIN category ON post.category = category.category_id
+                        LEFT JOIN user ON post.author = user.user_id
+                        WHERE post.post_id = {$post_id}";
 
-                        $result  = mysqli_query($conn,$query) or die("result rrorr");
-
+                        $result = mysqli_query($conn, $sql) or die("Query Failed.");
                         if(mysqli_num_rows($result) > 0){
-
-                        while($row = mysqli_fetch_assoc($result)){
-                        ?>
-
+                          while($row = mysqli_fetch_assoc($result)) {
+                      ?>
                         <div class="post-content single-post">
-                            <h3><?php echo $row['title']; ?>
+                            <h3><?php echo $row['title']; ?></h3>
                             <div class="post-information">
                                 <span>
                                     <i class="fa fa-tags" aria-hidden="true"></i>
-                                   <a href="category.php?cid=<?php echo $row['category']; ?> "> <?php echo $row['category_name']; ?> </a>
+                                    <a href='category.php?cid=<?php echo $row['category']; ?>'><?php echo $row['category_name']; ?></a>
                                 </span>
                                 <span>
                                     <i class="fa fa-user" aria-hidden="true"></i>
-                                    <a href='author.php'><?php echo $row['username']; ?></a>
+                                    <a href='author.php?aid=<?php echo $row['author']; ?>'><?php echo $row['username']; ?></a>
                                 </span>
                                 <span>
                                     <i class="fa fa-calendar" aria-hidden="true"></i>
                                     <?php echo $row['post_date']; ?>
                                 </span>
                             </div>
-                            <img  class="single-feature-image" src="admin/upload/<?php echo $row['post_img']; ?>" alt=""/>
+                            <img class="single-feature-image" src="admin/upload/<?php echo $row['post_img']; ?>" alt=""/>
                             <p class="description">
-                            <?php echo $row['description']; ?>          </p>
+                                <?php echo $row['description']; ?>
+                            </p>
                         </div>
                         <?php
+                          }
+                        }else{
+                          echo "<h2>No Record Found.</h2>";
                         }
-                    }else{
-                        echo "<h2>NO RECOD FOUND</h2>"; 
-                    }
+
                         ?>
                     </div>
                     <!-- /post-container -->

@@ -1,7 +1,7 @@
 <?php
-$hostname = "http://localhost/news-site";
+$hostname = "http://localhost/news-paper";
 
-$conn = mysqli_connect("localhost","root","","news-site") or die("connection failed : " . mysqli_connect_error());
+$conn = mysqli_connect("localhost","root","","news-paper") or die("connection failed : " . mysqli_connect_error());
 
 
 ?>
