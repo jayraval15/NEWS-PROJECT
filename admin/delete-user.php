@@ -1,21 +1,18 @@
 <?php
+include "config.php";
+if($_SESSION["user_role"] == '0'){
+  header("Location: {$hostname}/admin/post.php");
+}
+$userid = $_GET['id'];
 
+$sql = "DELETE FROM user WHERE user_id = {$userid}";
 
-require_once("config.php");
-if( $_SESSION['role']=='0')
-{
-    header("Location: {$hostname}/admin/post.php");
-   }
+if(mysqli_query($conn, $sql)){
+  header("Location: {$hostname}/admin/users.php");
+}else{
+  echo "<p style='color:red;margin: 10px 0;'>Can\'t Delete the User Record.</p>";
+}
 
-$id = $_GET['id'];
+mysqli_close($conn);
 
- $query = "DELETE  FROM  `paper` where  `id`='$id'";
- 
- if(mysqli_query($conn,$query)){
-
-    header("Location: {$hostname}/admin/users.php");
- }else{
-    echo "<p> cont delete thise user";
- } 
- mysqli_close($conn);
 ?>

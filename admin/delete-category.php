@@ -1,21 +1,17 @@
 <?php
+    include 'config.php';
+    if($_SESSION["user_role"] == '0'){
+      header("Location: {$hostname}/admin/post.php");
+    }
+    $cat_id = $_GET["id"];
 
+    /*sql to delete a record*/
+    $sql = "DELETE FROM category WHERE category_id ='{$cat_id}'";
 
-require_once("config.php");
-if( $_SESSION['role']=='0')
-{
-    header("Location: {$hostname}/admin/post.php");
-   }
+    if (mysqli_query($conn, $sql)) {
+        header("location:{$hostname}/admin/category.php");
+    }
 
-$id = $_GET['category_id'];
+    mysqli_close($conn);
 
- $query = "DELETE  FROM  `category` where  `category_id`='$id'";
- 
- if(mysqli_query($conn,$query)){
-
-    header("Location: {$hostname}/admin/category.php");
- }else{
-    echo "<p> cont delete thise user";
- } 
- mysqli_close($conn);
 ?>

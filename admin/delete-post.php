@@ -1,23 +1,21 @@
 <?php
-include "config.php";
-$post_id = $_GET['id'];
+  include "config.php";
 
-$sql = "SELECT * FROM post where post_id = {$post_id}"; 
-$result = mysqli_query($conn,$sql) or die("36386");
+  $post_id = $_GET['id'];
+  $cat_id = $_GET['catid'];
 
-$row = mysqli_fetch_assoc($result);
+  $sql1 = "SELECT * FROM post WHERE post_id = {$post_id}";
+  $result = mysqli_query($conn, $sql1) or die("Query Failed : Select");
+  $row = mysqli_fetch_assoc($result);
 
-unlink("upload/".$row['post_img']);
+  unlink("upload/".$row['post_img']);
 
-$cat_id = $_GET['catid'];
+  $sql = "DELETE FROM post WHERE post_id = {$post_id};";
+  $sql .= "UPDATE category SET post= post - 1 WHERE category_id = {$cat_id}";
 
-$query = "DELETE FROM post where post_id = {$post_id}"; 
-//$query .= "UPDATE category set post = post - 1 where category_id = {$cat_id}";
-
-if(mysqli_multi_query($conn,$query)){
+  if(mysqli_multi_query($conn, $sql)){
     header("location: {$hostname}/admin/post.php");
-}else{
-    echo "Error: ";
-}
-
+  }else{
+    echo "Query Failed";
+  }
 ?>
